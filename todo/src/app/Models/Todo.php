@@ -11,7 +11,28 @@ class Todo extends Model
 
     protected $fillable =['category_id','content'];
 
-    public function Todo(){
+    public function Todo()
+    {
     return $this->belongsTo('Category::class');
     }
+
+    public function category()
+    {
+    return $this->belongsTo(Category::class);
+    }
+
+    public function scopeCategorySearch($query, $category_id)
+    {
+    if (!empty($category_id)) {
+    $query->where('category_id', $category_id);
+    }
+    }
+
+public function scopeKeywordSearch($query, $keyword)
+    {
+    if (!empty($keyword)) {
+    $query->where('content', 'like', '%' . $keyword . '%');
+    }
+    }
+
 }
